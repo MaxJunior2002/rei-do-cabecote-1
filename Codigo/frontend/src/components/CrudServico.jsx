@@ -27,7 +27,7 @@ const CrudServico = () => {
     descricao: '',
     tipo: '',
     status: 'Pendente', 
-    maoDeObra: 0,
+    maoDeObra: null,
     dataPrevista: null,
     pecas: [], // agora é array
     veiculo: null,
@@ -55,7 +55,7 @@ const CrudServico = () => {
     descricao: '', 
     tipo: '', 
     status: 'Pendente', 
-    maoDeObra: 0, 
+    maoDeObra: null,
     dataPrevista: null, 
     pecas: [], // array
     veiculo: null, 
@@ -238,7 +238,7 @@ const CrudServico = () => {
   };
 
   const saveServico = async () => {
-    if (!servico.descricao || !servico.tipo || (servico.maoDeObra === null || servico.maoDeObra === undefined) || !servico.dataPrevista || !servico.veiculo || !servico.cliente || !servico.status || !servico.tipoPagamento || !servico.pecas || servico.pecas.length === 0) {
+    if (!servico.descricao || !servico.tipo || !servico.dataPrevista || !servico.veiculo || !servico.cliente || !servico.status || !servico.tipoPagamento || !servico.pecas || servico.pecas.length === 0) {
       toast.current.show({ severity: 'warn', summary: 'Atenção', detail: 'Preencha todos os campos obrigatórios, incluindo ao menos uma peça...', life: 3000 });
       return;
     }
@@ -259,7 +259,7 @@ const CrudServico = () => {
       descricao: servico.descricao,
       tipo: servico.tipo,
       status: servico.status,
-      maoDeObra: servico.maoDeObra,
+      maoDeObra: Number(servico.maoDeObra || 0),
       dataPrevista: dataPrevistaFormatada,
       garantia: garantiaFormatada,
       idPecas: servico.pecas.map(p => p.id),
@@ -673,7 +673,9 @@ const CrudServico = () => {
   onValueChange={(e) => onInputChange(e, 'maoDeObra')}
   mode="currency"
   currency="BRL"
+  locale="pt-BR"
   minFractionDigits={2}
+  placeholder="R$ 0,00"
   inputStyle={{ height: '38px', padding: '8px 12px', lineHeight: '1.2' }}
 />
           </div>
